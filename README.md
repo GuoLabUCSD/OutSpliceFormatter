@@ -11,8 +11,8 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 	
 
 ## Installation:
-	1. git clone (INSERT LINK TO OUR GITHUB REPO HERE)
-	2. Download quartile_norm.pl
+	1. git clone (https://github.com/GuoLabUCSD/OutSplice)
+	2. Download quartile_norm.pl (https://github.com/mozack/ubu/blob/master/src/perl/quartile_norm.pl)
 	3. Place the quartile_norm.pl inside the OutSplice_Formatter directory
 
 
@@ -22,12 +22,12 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 
 
 ## Requirements for RSEM Data Formatting Only:
- * Perl (Tested on version 5.26.3)
+ * Perl (version 5.26.3)
 	* quartile_norm.pl
- * R (Tested on version 4.1)
-	* AnnotationDbi
-	* argparser
-	* org.Hs.eg.db AND/OR org.Mm.eg.db
+ * R (version 4.1)
+	* AnnotationDbi (version 1.56.2)
+	* argparser (version 0.7.1)
+	* org.Hs.eg.db AND/OR org.Mm.eg.db (version 3.14.0)
 
 
 ## Arguments:
