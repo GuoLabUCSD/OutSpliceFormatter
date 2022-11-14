@@ -18,7 +18,7 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 
 ## Minimum Requirements:
  * Python 3 with the following modules installed:
-	* pandas (Tested on version 1.4.3)
+	* pandas (version 1.4.3)
 
 
 ## Requirements for RSEM Data Formatting Only:
