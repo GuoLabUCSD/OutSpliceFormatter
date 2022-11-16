@@ -7,7 +7,7 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 				Ex) chr1, chr2, etc.
 	* For mouse data: Please ensure the chromsome column in your SJ.out.tab file has the below labelling convention
 				Ex) 1, 2, etc.
-	* RSEM Results for Tumor and Normal Samples [OPTIONAL]
+ * RSEM Results for Tumor and Normal Samples [OPTIONAL]
 	
 
 ## Installation:
