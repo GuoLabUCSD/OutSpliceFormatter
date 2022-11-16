@@ -53,8 +53,11 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 		./format_data.sh -a ../STAR_OUTPUT_TUMORS/ -b ../STAR_OUTPUT_NORMALS -c ../RSEM_OUTPUT_TUMORS -d ../RSEM_OUTPUT_NORMALS -o matrix_files/ -p my_samples -m
 
 ## Output:
+	{Filename Prefix}_phenos.txt:
+		Tab separated text file containing a matrix of sample names and whether they are tumors (True) or normals (False)
+	
 	{Filename Prefix}_rawcounts.txt:
-		Tab separated text file containing a matrix of the Number of Uniquely Mapped Reads for each sample based on STAR's Log.final.out file
+		Tab separated text file containing a matrix of the number of uniquely mapped reads for each sample based on STAR's Log.final.out file
 
 	{Filename Prefix}_expected_counts_entrez.txt:
 		Tab separated text file containing a matrix of the expected counts expression results from RSEM's genes.results file with entrez IDs
