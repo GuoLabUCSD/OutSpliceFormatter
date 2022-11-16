@@ -18,16 +18,16 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 
 ## Minimum Requirements:
  * Python 3 with the following modules installed:
-	* pandas (version 1.4.3)
+	* pandas (>= version 1.4.3)
 
 
 ## Requirements for RSEM Data Formatting Only:
- * Perl (version 5.26.3)
+ * Perl (>= version 5.26.3)
 	* quartile_norm.pl
- * R (version 4.1)
-	* AnnotationDbi (version 1.56.2)
-	* argparser (version 0.7.1)
-	* org.Hs.eg.db AND/OR org.Mm.eg.db (version 3.14.0)
+ * R (>= version 4.1)
+	* AnnotationDbi (>= version 1.56.2)
+	* argparser (>= version 0.7.1)
+	* org.Hs.eg.db AND/OR org.Mm.eg.db (>= version 3.14.0)
 
 
 ## Arguments:
