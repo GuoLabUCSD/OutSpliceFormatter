@@ -1,6 +1,7 @@
 # OutSpliceFormatter:
 This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Software on Human or Mouse Genomes by automatically extracting the total and junction read counts from a STAR alignment output directory. It will then output a matrix with all of the data combined together that can be easily provided to OutSplice for immediate use. Optionally, if RSEM directories are provided, the tool will also extract the expected counts expression results and perform a quartile normalization based on the TCGA mRNA-seq pipeline, outputting a normalized expression matrix for use with OutSplice. If the user wishes to use their own normalization method, a matrix of all expected counts is also provided.
 
+
 ## Pre-Requisites:
  * STAR Results for Tumor and Normal Samples
 	* For human data: Please ensure the chromsome column in your SJ.out.tab file has the below labelling convention
@@ -27,8 +28,8 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
  * R (>= version 4.1)
 	* AnnotationDbi (>= version 1.56.2)
 	* argparser (>= version 0.7.1)
-	* org.Hs.eg.db AND/OR org.Mm.eg.db (>= version 3.14.0)
 	* dplyr (>= version 1.0.10)
+	* org.Hs.eg.db AND/OR org.Mm.eg.db (>= version 3.14.0)
 
 
 ## Arguments:
@@ -48,10 +49,12 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 	-m      
 		Data is from a Mouse Genome [OPTIONAL]
 
+
 ## Example Usage:
 * From the OutSpliceFormatter Directory
 
 		./format_data.sh -a ../STAR_OUTPUT_TUMORS/ -b ../STAR_OUTPUT_NORMALS -c ../RSEM_OUTPUT_TUMORS -d ../RSEM_OUTPUT_NORMALS -o matrix_files/ -p my_samples -m
+
 
 ## Output:
 	{Filename Prefix}_phenos.txt:
