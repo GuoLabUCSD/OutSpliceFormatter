@@ -28,6 +28,7 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 	* AnnotationDbi (>= version 1.56.2)
 	* argparser (>= version 0.7.1)
 	* org.Hs.eg.db AND/OR org.Mm.eg.db (>= version 3.14.0)
+	* dplyr (>= version 1.0.10)
 
 
 ## Arguments:
