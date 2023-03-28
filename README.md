@@ -13,10 +13,10 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 	
 
 ## Installation:
-	1. git clone https://github.com/GuoLabUCSD/OutSpliceFormatter
-	2. Download quartile_norm.pl 
-		1. wget https://raw.githubusercontent.com/mozack/ubu/master/src/perl/quartile_norm.pl
-	3. Place the quartile_norm.pl file inside the OutSplice_Formatter directory with all of the other files
+ 1. git clone https://github.com/GuoLabUCSD/OutSpliceFormatter
+ 2. Download quartile_norm.pl
+  	* wget https://raw.githubusercontent.com/mozack/ubu/master/src/perl/quartile_norm.pl
+ 4. Place the quartile_norm.pl file inside the OutSplice_Formatter directory with all of the other files
 
 
 ## Minimum Requirements:
