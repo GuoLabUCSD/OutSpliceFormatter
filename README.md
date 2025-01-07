@@ -50,6 +50,8 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 		Output Directory to store files
 	-p      
 		Prefix to what the output files should be named
+  	-l
+   		Path to the OutSplice Formatter Directory
 	-m      
 		Data is from a Mouse Genome [OPTIONAL]
 
@@ -57,7 +59,7 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 ## Example Usage:
 * From the OutSpliceFormatter Directory
 
-		./format_data.sh -a [../STAR_OUTPUT_TUMORS/] -b [../STAR_OUTPUT_NORMALS] -c [../RSEM_OUTPUT_TUMORS] -d [../RSEM_OUTPUT_NORMALS] -o [matrix_files/] -p [my_samples] -m
+		./format_data.sh -a [../STAR_OUTPUT_TUMORS/] -b [../STAR_OUTPUT_NORMALS] -c [../RSEM_OUTPUT_TUMORS] -d [../RSEM_OUTPUT_NORMALS] -o [matrix_files/] -l [.] -p [my_samples] -m
 
 
 ## Output:
