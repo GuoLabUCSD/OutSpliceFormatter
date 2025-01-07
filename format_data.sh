@@ -15,12 +15,13 @@ Arguments:
 -d	Path to a Directory containing RSEM's genes.results files for the normal samples [OPTIONAL]
 -o 	Output Directory to store files
 -p 	Prefix to what the output files should be named
+-l	Path to the OutSplice Formatter Directory
 -m	Data is from a Mouse Genome [OPTIONAL]
 EOF
   exit
 }
 
-while getopts "a:b:c:d:o:p:mh" flag ; do
+while getopts "a:b:c:d:o:p:l:mh" flag ; do
 
 	case "${flag}" in
 		a) star_results_tumors=${OPTARG};;
@@ -29,12 +30,13 @@ while getopts "a:b:c:d:o:p:mh" flag ; do
 		d) rsem_results_normals=${OPTARG};;
 		o) output_directory=${OPTARG};;
 		p) output_prefix=${OPTARG};;
+		l) formatter_directory=${OPTARG};;
 		m) mouse='This_is_a_Mouse_Genome';;
 		h) usage;;
 	esac
 done
 
-if [ -z $star_results_tumors ] || [ -z $star_results_normals ] || [ -z $output_directory ] || [ -z $output_prefix ]; then
+if [ -z $star_results_tumors ] || [ -z $star_results_normals ] || [ -z $output_directory ] || [ -z $output_prefix ] || [ -z $formatter_directory ]; then
 	echo "Missing required arguments"
 	usage
 	exit 1
@@ -48,7 +50,7 @@ fi
 #Get phenotype matrix
 echo "Generating Phenotype Matrix"
 
-python get_phenotypes.py \
+python $formatter_directory/get_phenotypes.py \
 --star_results_tumors $star_results_tumors \
 --star_results_normals $star_results_normals \
 --output_directory $output_directory \
@@ -57,7 +59,7 @@ python get_phenotypes.py \
 #Get rawcounts file
 echo "Getting Rawcounts"
 
-python get_rawcounts.py \
+python $formatter_directory/get_rawcounts.py \
 --star_results_tumors $star_results_tumors \
 --star_results_normals $star_results_normals \
 --output_directory $output_directory \
@@ -71,7 +73,7 @@ if [ -z $rsem_results_tumors ] && [ -z $rsem_results_normals ]; then
 else
 	echo "Getting Expecting Counts"
 
-	python get_expectedCounts_RSEM.py --rsem_results_tumors $rsem_results_tumors --rsem_results_normals $rsem_results_normals --output_directory $output_directory --output_prefix $output_prefix
+	python $formatter_directory/get_expectedCounts_RSEM.py --rsem_results_tumors $rsem_results_tumors --rsem_results_normals $rsem_results_normals --output_directory $output_directory --output_prefix $output_prefix
 
 	echo "Converting IDs"
 fi
@@ -81,9 +83,9 @@ if [ -z $rsem_results_tumors ] && [ -z $rsem_results_normals ]; then
 	echo "No RSEM data provided, skipping ID conversion..."
 else
 	if [ -z $mouse ]; then
-		Rscript Ensembl2Entrez.R --output_directory $output_directory --output_prefix $output_prefix
+		Rscript $formatter_directory/Ensembl2Entrez.R --output_directory $output_directory --output_prefix $output_prefix
 	else
-		Rscript Ensembl2EntrezMouse.R --output_directory $output_directory --output_prefix $output_prefix
+		Rscript $formatter_directory/Ensembl2EntrezMouse.R --output_directory $output_directory --output_prefix $output_prefix
 	fi
 
 	echo "IDs Converted"
@@ -96,7 +98,7 @@ if [ -z $rsem_results_tumors ] && [ -z $rsem_results_normals ]; then
 else
 	echo "Executing Quartile Normalization"
 
-	perl quartile_norm.pl -s 1 -c -1 -q 75 -t 1000 -o $output_directory/$output_prefix\_genes_normalized_TMP.txt $output_directory/$output_prefix\_expected_counts_entrez.txt
+	perl $formatter_directory/quartile_norm.pl -s 1 -c -1 -q 75 -t 1000 -o $output_directory/$output_prefix\_genes_normalized_TMP.txt $output_directory/$output_prefix\_expected_counts_entrez.txt
 fi
 
 
@@ -106,7 +108,7 @@ if [ -z $rsem_results_tumors ] && [ -z $rsem_results_normals ]; then
 else
 	echo 'Formatting'
 
-	python format_normalized_RSEM.py --output_directory $output_directory --output_prefix $output_prefix
+	python $formatter_directory/format_normalized_RSEM.py --output_directory $output_directory --output_prefix $output_prefix
 
 	echo 'Normalized Expression File Generated'
 fi
@@ -115,9 +117,9 @@ fi
 echo 'Getting Junction Counts'
 
 if [ -z $mouse ]; then
-	python get_junctions.py --star_results_tumors $star_results_tumors --star_results_normals $star_results_normals --output_directory $output_directory --output_prefix $output_prefix
+	python $formatter_directory/get_junctions.py --star_results_tumors $star_results_tumors --star_results_normals $star_results_normals --output_directory $output_directory --output_prefix $output_prefix
 else
-	python get_junctionsMouse.py --star_results_tumors $star_results_tumors --star_results_normals $star_results_normals --output_directory $output_directory --output_prefix $output_prefix
+	python $formatter_directory/get_junctionsMouse.py --star_results_tumors $star_results_tumors --star_results_normals $star_results_normals --output_directory $output_directory --output_prefix $output_prefix
 fi
 
 echo "Junction's File Generated"
