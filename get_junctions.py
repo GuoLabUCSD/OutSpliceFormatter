@@ -16,15 +16,35 @@ args = parser.parse_args()
 
 #Function to get Junction Counts from STAR SJ.out.tab
 
+acceptable_values = ['chr1', 'chr2', 'chr3', 'chr4', 'chr5', 'chr6', 'chr7', 'chr8', 
+                     'chr9', 'chr10', 'chr11', 'chr12', 'chr13', 'chr14', 'chr15', 'chr16', 'chr17', 
+                     'chr18', 'chr19', 'chr20', 'chr21', 'chr22', 'chrX', 'chrY']
+
 def combine_junction_counts(star_results_tumors, star_results_normals):
     combined_junction = pd.DataFrame(columns = ['junction'])
 
     for file in os.listdir(star_results_tumors):
         junction_counts_df = pd.DataFrame()
+        formatted = False
         if file.endswith("SJ.out.tab"):
             path = os.path.join(star_results_tumors, file)
             junction_counts = pd.read_csv(path, sep = '\t', header = None, names = ['chromosome', 'intron_start', 'intron_end', 'strand', 'motif', 'is_annotated', 'unique_reads', 'multi_mapped_reads', 'max_overhang'])
+            check_firstcol = junction_counts['chromosome'].to_list()
+            for i in check_firstcol:
+                i = str(i)
+                if 'chr' in i:
+                    formatted = True
+                    break
+            if formatted == False:
+                junction_counts['chromosome'] = 'chr' + junction_counts['chromosome'].astype(str)
+                check_firstcol = junction_counts['chromosome'].to_list()
+            ind2lose = []
+            for index, string in enumerate(check_firstcol):
+                val = string.split(':')
+                if val[0] not in acceptable_values:
+                    ind2lose.append(index)
             junction_counts_df = junction_counts_df.append(junction_counts)
+            junction_counts_df = junction_counts_df.drop(junction_counts.index[ind2lose])
             junction_counts_df = junction_counts_df[junction_counts_df['chromosome'].str.contains('chr')]
             junction_counts_df = junction_counts_df[junction_counts_df["chromosome"].str.contains("chrM") == False]
             junction_counts_df['intron_start'] = junction_counts_df['intron_start'] - 1
@@ -33,25 +53,34 @@ def combine_junction_counts(star_results_tumors, star_results_normals):
             junc_string = []
             for index, row in junction_counts_df.iterrows():
                 junc_string.append('{}:{}-{}'.format(row['chromosome'], row['intron_start'], row['intron_end']))
-                #if row['strand'] == 1:
-                #    junc_string.append('{}:{}:+,{}:{}:+'.format(row['chromosome'], row['intron_start'], row['chromosome'], row['intron_end']))
-                #elif row['strand'] == 2:
-                #    junc_string.append('{}:{}:-,{}:{}:-'.format(row['chromosome'], row['intron_start'], row['chromosome'], row['intron_end']))
-                #elif row['strand'] == 0:
-                #    junc_string.append('{}:{}:?,{}:{}:?'.format(row['chromosome'], row['intron_start'], row['chromosome'], row['intron_end']))
             junction_counts_df.insert(0, 'junction', junc_string)
             junction_counts_df = junction_counts_df.drop(['chromosome', 'intron_start', 'intron_end', 'strand', 'motif', 'is_annotated', 'multi_mapped_reads', 'max_overhang'], axis = 1)
             filename = file.split('SJ')[0]
-            #filename = filename.ljust(10, 'X')
             junction_counts_df.rename(columns = {'unique_reads':'{}'.format(filename)}, inplace = True)
             combined_junction = combined_junction.merge(junction_counts_df, on = 'junction', how = 'outer')
             
     for file in os.listdir(star_results_normals):
         junction_counts_df = pd.DataFrame()
+        formatted = False
         if file.endswith("SJ.out.tab"):
             path = os.path.join(star_results_normals, file)
             junction_counts = pd.read_csv(path, sep = '\t', header = None, names = ['chromosome', 'intron_start', 'intron_end', 'strand', 'motif', 'is_annotated', 'unique_reads', 'multi_mapped_reads', 'max_overhang'])
+            check_firstcol = junction_counts['chromosome'].to_list()
+            for i in check_firstcol:
+                i = str(i)
+                if 'chr' in i:
+                    formatted = True
+                    break
+            if formatted == False:
+                junction_counts['chromosome'] = 'chr' + junction_counts['chromosome'].astype(str)
+                check_firstcol = junction_counts['chromosome'].to_list()
+            ind2lose = []
+            for index, string in enumerate(check_firstcol):
+                val = string.split(':')
+                if val[0] not in acceptable_values:
+                    ind2lose.append(index)
             junction_counts_df = junction_counts_df.append(junction_counts)
+            junction_counts_df = junction_counts_df.drop(junction_counts.index[ind2lose])
             junction_counts_df = junction_counts_df[junction_counts_df['chromosome'].str.contains('chr')]
             junction_counts_df = junction_counts_df[junction_counts_df["chromosome"].str.contains("chrM") == False]
             junction_counts_df['intron_start'] = junction_counts_df['intron_start'] - 1
@@ -60,16 +89,9 @@ def combine_junction_counts(star_results_tumors, star_results_normals):
             junc_string = []
             for index, row in junction_counts_df.iterrows():
                 junc_string.append('{}:{}-{}'.format(row['chromosome'], row['intron_start'], row['intron_end']))
-                #if row['strand'] == 1:
-                #    junc_string.append('{}:{}:+,{}:{}:+'.format(row['chromosome'], row['intron_start'], row['chromosome'], row['intron_end']))
-                #elif row['strand'] == 2:
-                #    junc_string.append('{}:{}:-,{}:{}:-'.format(row['chromosome'], row['intron_start'], row['chromosome'], row['intron_end']))
-                #elif row['strand'] == 0:
-                #    junc_string.append('{}:{}:?,{}:{}:?'.format(row['chromosome'], row['intron_start'], row['chromosome'], row['intron_end']))
             junction_counts_df.insert(0, 'junction', junc_string)
             junction_counts_df = junction_counts_df.drop(['chromosome', 'intron_start', 'intron_end', 'strand', 'motif', 'is_annotated', 'multi_mapped_reads', 'max_overhang'], axis = 1)
             filename = file.split('SJ')[0]
-            #filename = filename.ljust(10, 'X')
             junction_counts_df.rename(columns = {'unique_reads':'{}'.format(filename)}, inplace = True)
             combined_junction = combined_junction.merge(junction_counts_df, on = 'junction', how = 'outer')
     
@@ -78,9 +100,6 @@ def combine_junction_counts(star_results_tumors, star_results_normals):
     junc_col = combined_junction['junction']
     combined_junction.drop(['junction'], axis=1, inplace = True)
     combined_junction.insert(0, 'junction', junc_col)
-    #combined_junction.loc[-1] = 'raw_counts'
-    #combined_junction.index = combined_junction.index + 1
-    #combined_junction = combined_junction.sort_index()
     return combined_junction
 
 Z = combine_junction_counts(args.star_results_tumors, args.star_results_normals)

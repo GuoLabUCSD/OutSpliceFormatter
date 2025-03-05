@@ -116,11 +116,7 @@ fi
 #Get junction counts from STAR
 echo 'Getting Junction Counts'
 
-if [ -z $mouse ]; then
-	python $formatter_directory/get_junctions.py --star_results_tumors $star_results_tumors --star_results_normals $star_results_normals --output_directory $output_directory --output_prefix $output_prefix
-else
-	python $formatter_directory/get_junctionsMouse.py --star_results_tumors $star_results_tumors --star_results_normals $star_results_normals --output_directory $output_directory --output_prefix $output_prefix
-fi
+python $formatter_directory/get_junctions.py --star_results_tumors $star_results_tumors --star_results_normals $star_results_normals --output_directory $output_directory --output_prefix $output_prefix
 
 echo "Junction's File Generated"
 
