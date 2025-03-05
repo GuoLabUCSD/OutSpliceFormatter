@@ -4,10 +4,6 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 
 ## Pre-Requisites:
  * STAR Results for Tumor and Normal Samples
-	* For human data: Please ensure the chromsome column in your SJ.out.tab file has the below labelling convention
-				Ex) chr1, chr2, etc.
-	* For mouse data: Please ensure the chromsome column in your SJ.out.tab file has the below labelling convention
-				Ex) 1, 2, etc.
  * RSEM Results for Tumor and Normal Samples [OPTIONAL]
  * Sample names starting with a numeric value should be avoided. Please also avoid special characters in sample names (ie: "-", "!", etc.)
 	
