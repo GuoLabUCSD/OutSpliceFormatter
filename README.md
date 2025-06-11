@@ -3,8 +3,8 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 
 
 ## Pre-Requisites:
- * STAR Results for Tumor and Normal Samples
- * RSEM Results for Tumor and Normal Samples [OPTIONAL]
+ * STAR Results for Tumor and/or Normal Samples
+ * RSEM Results for Tumor and/or Normal Samples [OPTIONAL]
  * Sample names starting with a numeric value should be avoided. Please also avoid special characters in sample names (ie: "-", "!", etc.)
 	
 
@@ -56,6 +56,7 @@ This tool aims to ease a user's RNA-Seq Splicing Analyses with the OutSplice Sof
 * From the OutSpliceFormatter Directory
 
 		./format_data.sh -a [../STAR_OUTPUT_TUMORS/] -b [../STAR_OUTPUT_NORMALS] -c [../RSEM_OUTPUT_TUMORS] -d [../RSEM_OUTPUT_NORMALS] -o [matrix_files/] -l [.] -p [my_samples] -m
+  		./format_single.sh -a [../STAR_OUTPUT_TUMORS/] -c [../RSEM_OUTPUT_TUMORS] -o [matrix_files/] -l [.] -p [my_samples] -m
 
 
 ## Output:
